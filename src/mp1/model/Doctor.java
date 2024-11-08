@@ -1,11 +1,14 @@
 package mp1.model;
 
+import mp1.exception.ValException;
+
+import java.time.LocalDate;
 import java.util.*;
 
 public class Doctor {
     private long doctorId; //simple attribute
     private Set<String> patients = new HashSet<>();
-    private Contact contact;
+    private Contact contact;//complex attribute
     private String firstName;//simple attribute
     private String surname;//simple attribute
     public static int internshipInMonths = 13;
@@ -47,6 +50,12 @@ public class Doctor {
     }
 
     public void setYearOfBirth(int yearOfBirth) {
+        if(yearOfBirth < 0){//if year is less then zero then throw RuntimeException
+            throw new ValException("yearOfBirth cannot be less than zero");
+        }
+        if(yearOfBirth> LocalDate.now().getYear()){//if yearOfBirth is reaching far into the future then throw RuntimeException
+            throw new ValException("yearOfBirth cannot be higher than today's date");
+        }
         this.yearOfBirth = yearOfBirth;
     }
 
@@ -56,7 +65,7 @@ public class Doctor {
 
     public void setContact(Contact contact) {
         if(contact == null){
-//            throw new ValException("contact cannot be empty");
+            throw new ValException("contact cannot be empty");
         }
         this.contact = contact;
     }

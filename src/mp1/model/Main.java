@@ -58,10 +58,20 @@ public class Main {
 
         //Iterate through all extent's from class mp1.model.Doctor and print them out
         Iterable<Doctor> doctorExtent = ObjectPlus.getExtent(Doctor.class);
-        for(Doctor doctors: doctorExtent){
-            System.out.println(doctors);
+        for(Doctor doc: doctorExtent){
+            System.out.println(doc);
         }
 
+        //Get all doctors Complex attributes
+        for(Doctor doc: doctorExtent){
+            System.out.println("Doctor "+doc.getFirstName()+" "+doc.getSurname() +" contact: "+doc.getContact());
+        }
 
+        //Get all doctors Optional attributes
+        for(Doctor doc: doctorExtent){
+            System.out.println("Doctor "+doc.getFirstName()+" "+doc.getSurname() +" have "+doc.getHowManyCertificates().orElse(0)+" certificates");
+        }
+
+        
     }
 }

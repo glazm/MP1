@@ -2,9 +2,12 @@ package mp1.model;
 
 import mp1.exception.ValException;
 
+import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class Doctor extends ObjectPlus implements Serializable {//extend mp1.model.ObjectPlus to have access to its methods and global extent
     private long doctorId; //simple attribute that is needed to identify doctor
@@ -28,7 +31,6 @@ public class Doctor extends ObjectPlus implements Serializable {//extend mp1.mod
         setYearOfBirth(yearOfBirth);//use of setter for yearOfBirth
         setContact(contact);//use of setter for contact
         addPatient(patient);//use of method to add patient to list of patients
-        tillRetirement = tillRetirement();//?
     }//Constructor
 
     public Doctor(long doctorId, String firstName, String surname, int yearOfBirth, Contact contact, String patient, int tillRetirement, Integer howManyCertificates){
@@ -39,7 +41,6 @@ public class Doctor extends ObjectPlus implements Serializable {//extend mp1.mod
         setYearOfBirth(yearOfBirth);//use of setter for yearOfBirth
         setContact(contact);//use of setter for contact
         addPatient(patient);//use of method to add patient to list of patients
-        tillRetirement = tillRetirement();//?
         setHowManyCertificates(howManyCertificates);//use of setter for howManyCertificates
     }//overloading Constructor
 
@@ -123,5 +124,48 @@ public class Doctor extends ObjectPlus implements Serializable {//extend mp1.mod
             throw new ValException("doctor must have assigned to himself at least one patient");
         }
         this.patients.remove(patient);
+    }
+
+    //class method to find all doctors assigned to one patient
+    public static List<Doctor> allDoctorsOfPatient(String patient) throws ClassNotFoundException{
+        File extentFile = new File("./extentFile.txt");
+        Iterable<Doctor> doctorExtent = ObjectPlus.getExtent(Doctor.class);//prepare global extent to iterate
+
+        if(extentFile.exists()) {//if extent file doesn't exist then pass this step
+            if(patient == null || patient.trim().isEmpty()) {//if patient is null or after trimming string from whitespaces the string is empty then throw RuntimeException
+                throw new ValException("patient cannot be empty");
+            }
+            else {
+                Iterator<Doctor> iterator = doctorExtent.iterator();
+                return StreamSupport//prepare stream for logic statement
+                        .stream(doctorExtent.spliterator(), false)
+                        .filter(byYear -> byYear.patients.contains(patient))//logic statement using lamba for finding all doctors assigned to one patient
+                        .collect(Collectors.toList());//collect data to list
+            }
+        }
+        throw new ValException("extent file doesn't exist");
+    }
+
+    @Override
+    public String toString(){//override of toString method to prepare mp1.model.Doctor data
+        if(this.howManyCertificates!=null){
+            return doctorId + ", "  //for overloaded constructor
+                    + howManyCertificates + ", "
+                    + firstName + ", "
+                    + surname + ", "
+                    + yearOfBirth + ", "
+                    + contact.toString() + ", "
+                    + patients + ", "
+                    + internshipInMonths + ", "
+                    + tillRetirement() + "\n";
+        }
+        return doctorId + ", " //for constructor
+                + firstName + ", "
+                + surname + ", "
+                + yearOfBirth + ", "
+                + contact.toString() + ", "
+                + patients + ", "
+                + internshipInMonths + ", "
+                + tillRetirement() + "\n";
     }
 }

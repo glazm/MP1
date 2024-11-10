@@ -50,10 +50,18 @@ public class Main {
             e.printStackTrace();
         }
 
-        try{
+        try{ //show all Extent's
             Doctor.showExtent(Doctor.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        //Iterate through all extent's from class mp1.model.Doctor and print them out
+        Iterable<Doctor> doctorExtent = ObjectPlus.getExtent(Doctor.class);
+        for(Doctor doctors: doctorExtent){
+            System.out.println(doctors);
+        }
+
+
     }
 }

@@ -1,6 +1,7 @@
 package mp1.model;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class Main {
         Contact contact = new Contact("Healed Street",16,123456789,"Hospital for Sick");//constructor of Contact class
         Contact contact2 = new Contact("Virus Street",19,987654321,"Injection Hospital");//constructor of Contact class
         Doctor doctor = new Doctor(1,"John","Sulivan",1976,contact2,"Brad Sickly",3);//overloaded constructor of mp1.model.Doctor class
-        Doctor doctor2 = new Doctor(2,"Paul","Grand",1992,contact,"Brad Sickly");//constructor of mp1.model.Doctor class
+        Doctor doctor2 = new Doctor(2,"Paul","Grand",1998,contact,"Brad Funny");//constructor of mp1.model.Doctor class
         List<Doctor> doctorList = new ArrayList<>();//preparing container for mp1.model.Doctor data
         doctorList.add(doctor);//add mp1.model.Doctor to container
         doctorList.add(doctor2);//add mp1.model.Doctor to container
@@ -72,6 +73,33 @@ public class Main {
             System.out.println("Doctor "+doc.getFirstName()+" "+doc.getSurname() +" have "+doc.getHowManyCertificates().orElse(0)+" certificates");
         }
 
-        
+        //Get all doctors Repeated attributes
+        for(Doctor doc: doctorExtent){
+            System.out.println("Registered Patient: "+doc.getPatients().toString().replace("[","").replace("]",""));
+        }
+
+        //Get all doctors Simple attributes
+        for(Doctor doc: doctorExtent){
+            System.out.println("Doctor credentials: "
+                                + doc.getDoctorId()+ " "
+                                + doc.getFirstName()+ " "
+                                + doc.getSurname());
+        }
+
+        //Use of Class method allDoctorsOfPatient for Brad Sickly
+        System.out.println("Brad Sickly doctors: "+ Doctor.allDoctorsOfPatient("Brad Sickly"));
+
+        //Get all doctors Derived attributes
+        for(Doctor doc: doctorExtent){
+            System.out.println("Doctor "+doc.getFirstName()+" "+doc.getSurname() +" can retire in "
+                    +doc.tillRetirement()+" years");
+        }
+
+        //Get all doctors Class attributes
+        for(Doctor doc: doctorExtent){
+            System.out.println(LocalDateTime.now().minusYears(doc.getYearOfBirth()).getYear() <= Doctor.internshipAge
+                                ? "Doctor "+doc.getFirstName()+" "+doc.getSurname() +" is during his internship"
+                                : "Doctor "+doc.getFirstName()+" "+doc.getSurname() +" is after his internship");
+        }
     }
 }

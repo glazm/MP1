@@ -16,7 +16,7 @@ public class Doctor extends ObjectPlus implements Serializable {//extend mp1.mod
     private Contact contact;//complex attribute
     private String firstName;//simple attribute
     private String surname;//simple attribute
-    public static int internshipInMonths = 13; //class attribute
+    public static int internshipAge = 26; //class attribute
     private Integer howManyCertificates; //optional attribute
     private int yearOfBirth;//simple attribute
     final static int retirementAge = 68; //class attribute
@@ -157,7 +157,7 @@ public class Doctor extends ObjectPlus implements Serializable {//extend mp1.mod
                     + yearOfBirth + ", "
                     + contact.toString() + ", "
                     + patients + ", "
-                    + internshipInMonths + ", "
+                    + internshipAge + ", "
                     + tillRetirement() + "\n";
         }
         return doctorId + ", " //for constructor
@@ -166,7 +166,7 @@ public class Doctor extends ObjectPlus implements Serializable {//extend mp1.mod
                 + yearOfBirth + ", "
                 + contact.toString() + ", "
                 + patients + ", "
-                + internshipInMonths + ", "
+                + internshipAge + ", "
                 + tillRetirement() + "\n";
     }
 }

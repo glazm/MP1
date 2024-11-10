@@ -23,7 +23,7 @@ public class Doctor extends ObjectPlus implements Serializable {//extend mp1.mod
         return retirementAge - yearOfBirth;
     }//derived attribute
 
-    public Doctor(long doctorId, String firstName, String surname, int yearOfBirth, Contact contact, String patient, int tillRetirement){
+    public Doctor(long doctorId, String firstName, String surname, int yearOfBirth, Contact contact, String patient){
         super(); //use of super constructor to construct extent from mp1.model.ObjectPlus, global extent
         this.doctorId = doctorId; //assign doctorId to this specific class
         setFirstName(firstName);//use of setter for firstName
@@ -33,7 +33,7 @@ public class Doctor extends ObjectPlus implements Serializable {//extend mp1.mod
         addPatient(patient);//use of method to add patient to list of patients
     }//Constructor
 
-    public Doctor(long doctorId, String firstName, String surname, int yearOfBirth, Contact contact, String patient, int tillRetirement, Integer howManyCertificates){
+    public Doctor(long doctorId, String firstName, String surname, int yearOfBirth, Contact contact, String patient, Integer howManyCertificates){
         super(); //use of super constructor to construct extent from mp1.model.ObjectPlus, global extent
         this.doctorId = doctorId; //assign doctorId to this specific class
         setFirstName(firstName);//use of setter for firstName

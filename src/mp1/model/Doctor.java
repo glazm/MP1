@@ -2,24 +2,46 @@ package mp1.model;
 
 import mp1.exception.ValException;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Doctor {
-    private long doctorId; //simple attribute
-    private Set<String> patients = new HashSet<>();
+public class Doctor extends ObjectPlus implements Serializable {//extend mp1.model.ObjectPlus to have access to its methods and global extent
+    private long doctorId; //simple attribute that is needed to identify doctor
+    private Set<String> patients = new HashSet<>(); //repeated attribute
     private Contact contact;//complex attribute
     private String firstName;//simple attribute
     private String surname;//simple attribute
-    public static int internshipInMonths = 13;
-    private Integer howManyCertificates;
-
+    public static int internshipInMonths = 13; //class attribute
+    private Integer howManyCertificates; //optional attribute
     private int yearOfBirth;//simple attribute
-    final static int retirementAge = 68;
-
+    final static int retirementAge = 68; //class attribute
     public int tillRetirement(){
         return retirementAge - yearOfBirth;
-    }
+    }//derived attribute
+
+    public Doctor(long doctorId, String firstName, String surname, int yearOfBirth, Contact contact, String patient, int tillRetirement){
+        super(); //use of super constructor to construct extent from mp1.model.ObjectPlus, global extent
+        this.doctorId = doctorId; //assign doctorId to this specific class
+        setFirstName(firstName);//use of setter for firstName
+        setSurname(surname);//use of setter for surname
+        setYearOfBirth(yearOfBirth);//use of setter for yearOfBirth
+        setContact(contact);//use of setter for contact
+        addPatient(patient);//use of method to add patient to list of patients
+        tillRetirement = tillRetirement();//?
+    }//Constructor
+
+    public Doctor(long doctorId, String firstName, String surname, int yearOfBirth, Contact contact, String patient, int tillRetirement, Integer howManyCertificates){
+        super(); //use of super constructor to construct extent from mp1.model.ObjectPlus, global extent
+        this.doctorId = doctorId; //assign doctorId to this specific class
+        setFirstName(firstName);//use of setter for firstName
+        setSurname(surname);//use of setter for surname
+        setYearOfBirth(yearOfBirth);//use of setter for yearOfBirth
+        setContact(contact);//use of setter for contact
+        addPatient(patient);//use of method to add patient to list of patients
+        tillRetirement = tillRetirement();//?
+        setHowManyCertificates(howManyCertificates);//use of setter for howManyCertificates
+    }//overloading Constructor
 
     public long getDoctorId() {
         return doctorId;
@@ -34,6 +56,9 @@ public class Doctor {
     }
 
     public void setFirstName(String firstName) {
+        if(firstName == null || firstName.trim().isEmpty()){
+            throw new ValException("firstName cannot be empty");
+        }
         this.firstName = firstName;
     }
 
@@ -42,6 +67,9 @@ public class Doctor {
     }
 
     public void setSurname(String surname) {
+        if(surname == null || surname.trim().isEmpty()){
+            throw new ValException("surname cannot be empty");
+        }
         this.surname = surname;
     }
 
@@ -68,5 +96,32 @@ public class Doctor {
             throw new ValException("contact cannot be empty");
         }
         this.contact = contact;
+    }
+
+    public Optional<Integer> getHowManyCertificates(){
+        return Optional.ofNullable(howManyCertificates);//if null then return empty object
+    }
+
+    public void setHowManyCertificates(Integer howManyCertificates){
+        if(howManyCertificates != null && howManyCertificates<0){//if howManyCertificates is negative then throw RuntimeException
+            throw new ValException("negative value of certificates is not real");
+        }
+        this.howManyCertificates = howManyCertificates;
+    }
+
+    public Set<String> getPatients(){return Collections.unmodifiableSet(this.patients);}
+
+    public void addPatient(String patient){
+        if(patient == null){
+            throw new ValException("patient cannot be empty");
+        }
+        this.patients.add(patient);
+    }
+
+    public void removePatient(String patient){
+        if(this.patients.size() <2){//if there is only one patient then don't remove him
+            throw new ValException("doctor must have assigned to himself at least one patient");
+        }
+        this.patients.remove(patient);
     }
 }

@@ -2,7 +2,9 @@ package mp1.model;
 
 import mp1.exception.ValException;
 
-public class Contact {
+import java.io.Serializable;
+
+public class Contact extends ObjectPlus implements Serializable {
     private String streetName;//simple attribute
     private int streetNumber;//simple attribute
     private long telephoneNumber;//simple attribute

@@ -5,6 +5,7 @@ import mp1.exception.ValException;
 import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -20,7 +21,7 @@ public class Doctor extends ObjectPlus implements Serializable {//extend mp1.mod
     private int yearOfBirth;//simple attribute
     final static int retirementAge = 68; //class attribute
     public int tillRetirement(){
-        return retirementAge - yearOfBirth;
+        return (retirementAge + yearOfBirth) - LocalDateTime.now().getYear();
     }//derived attribute
 
     public Doctor(long doctorId, String firstName, String surname, int yearOfBirth, Contact contact, String patient){

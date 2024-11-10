@@ -22,8 +22,8 @@ public class Main {
             }
         }
 
-        Contact contact = new Contact("Healed",16,1234567889,"Hospital for Sick");//constructor of Contact class
-        Contact contact2 = new Contact("Virus",19,987654321,"Injection Hospital");//constructor of Contact class
+        Contact contact = new Contact("Healed Street",16,123456789,"Hospital for Sick");//constructor of Contact class
+        Contact contact2 = new Contact("Virus Street",19,987654321,"Injection Hospital");//constructor of Contact class
         Doctor doctor = new Doctor(1,"John","Sulivan",1976,contact2,"Brad Sickly",3);//overloaded constructor of mp1.model.Doctor class
         Doctor doctor2 = new Doctor(2,"Paul","Grand",1992,contact,"Brad Sickly");//constructor of mp1.model.Doctor class
         List<Doctor> doctorList = new ArrayList<>();//preparing container for mp1.model.Doctor data
@@ -47,6 +47,12 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            Doctor.showExtent(Doctor.class);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
